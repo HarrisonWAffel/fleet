@@ -96,7 +96,7 @@ type Config struct {
 	// private repo url prefix is specified on the agent's cluster resource
 	SystemDefaultRegistry string `json:"systemDefaultRegistry,omitempty"`
 
-	SystemDefaultRegistryPullSecret string `json:"systemDefaultRegistryPullSecret,omitempty"`
+	SystemDefaultRegistryPullSecrets []string `json:"systemDefaultRegistryPullSecret,omitempty"`
 
 	// AgentCheckinInterval determines how often agents update their clusters status, defaults to 15m
 	AgentCheckinInterval metav1.Duration `json:"agentCheckinInterval,omitempty"`

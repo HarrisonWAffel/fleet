@@ -77,6 +77,7 @@ func AgentWithConfig(ctx context.Context, agentNamespace, controllerNamespace, a
 	mo.SystemDefaultRegistry = cfg.SystemDefaultRegistry
 	mo.BundleDeploymentWorkers = cfg.AgentWorkers.BundleDeployment
 	mo.DriftWorkers = cfg.AgentWorkers.Drift
+	mo.SystemDefaultRegistryImagePullSecrets = cfg.SystemDefaultRegistryPullSecrets
 
 	mo.AgentReplicas = cmd.ParseEnvAgentReplicaCount()
 	mo.LeaderElectionOptions, err = cmd.NewLeaderElectionOptionsWithPrefix("FLEET_AGENT")

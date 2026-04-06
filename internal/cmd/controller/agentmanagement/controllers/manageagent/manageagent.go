@@ -349,15 +349,16 @@ func (h *handler) newAgentBundle(ns string, cluster *fleet.Cluster) (runtime.Obj
 			HostNetwork:      *cmp.Or(cluster.Spec.HostNetwork, ptr.To(false)),
 
 			// keep in sync with agent/agent.go
-			AgentImage:              cfg.AgentImage,
-			AgentImagePullPolicy:    cfg.AgentImagePullPolicy,
-			CheckinInterval:         cfg.AgentCheckinInterval.Duration.String(),
-			SystemDefaultRegistry:   cfg.SystemDefaultRegistry,
-			BundleDeploymentWorkers: cfg.AgentWorkers.BundleDeployment,
-			DriftWorkers:            cfg.AgentWorkers.Drift,
-			AgentReplicas:           agentReplicas,
-			LeaderElectionOptions:   leaderElectionOptions,
-			PriorityClassName:       priorityClassName,
+			AgentImage:                            cfg.AgentImage,
+			AgentImagePullPolicy:                  cfg.AgentImagePullPolicy,
+			CheckinInterval:                       cfg.AgentCheckinInterval.Duration.String(),
+			SystemDefaultRegistry:                 cfg.SystemDefaultRegistry,
+			SystemDefaultRegistryImagePullSecrets: cfg.SystemDefaultRegistryPullSecrets,
+			BundleDeploymentWorkers:               cfg.AgentWorkers.BundleDeployment,
+			DriftWorkers:                          cfg.AgentWorkers.Drift,
+			AgentReplicas:                         agentReplicas,
+			LeaderElectionOptions:                 leaderElectionOptions,
+			PriorityClassName:                     priorityClassName,
 		},
 	)
 	agentYAML, err := yaml.Export(objs...)
