@@ -126,6 +126,10 @@ type ClusterSpec struct {
 	// +nullable
 	PrivateRepoURL string `json:"privateRepoURL,omitempty"`
 
+	// PrivateRepoPullSecret
+	// +nullable
+	PrivateRepoPullSecrets []string `json:"privateRepoPullSecrets,omitempty"`
+
 	// TemplateValues defines a cluster specific mapping of values to be sent to fleet.yaml values templating.
 	// +nullable
 	// +kubebuilder:validation:XPreserveUnknownFields

@@ -35,6 +35,12 @@ spec:
 {{ toYaml $.Values.extraAnnotations.fleetController | indent 8 }}
 {{- end }}
     spec:
+      {{- with $.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- range . }}
+        - name: {{ . | quote }}
+        {{- end }}
+      {{- end }}
       containers:
       - env:
         - name: NAMESPACE

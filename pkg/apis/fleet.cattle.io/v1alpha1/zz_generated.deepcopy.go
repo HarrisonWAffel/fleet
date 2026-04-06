@@ -1108,6 +1108,11 @@ func (in *ClusterSpec) DeepCopyInto(out *ClusterSpec) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.PrivateRepoPullSecrets != nil {
+		in, out := &in.PrivateRepoPullSecrets, &out.PrivateRepoPullSecrets
+		*out = make([]string, len(*in))
+		copy(*out, *in)
+	}
 	if in.TemplateValues != nil {
 		in, out := &in.TemplateValues, &out.TemplateValues
 		*out = (*in).DeepCopy()

@@ -36,6 +36,12 @@ spec:
 {{ toYaml $.Values.extraAnnotations.gitjob | indent 8 }}
 {{- end }}
     spec:
+      {{- with $.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- range . }}
+        - name: {{ . | quote }}
+        {{- end }}
+      {{- end }}
       serviceAccountName: gitjob
       containers:
         - image: "{{ template "system_default_registry" $ }}{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"

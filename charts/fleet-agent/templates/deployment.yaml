@@ -12,6 +12,12 @@ spec:
       labels:
         app: fleet-agent
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- range . }}
+        - name: {{ . | quote }}
+        {{- end }}
+      {{- end }}
       containers:
       - env:
         - name: NAMESPACE

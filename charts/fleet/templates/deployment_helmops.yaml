@@ -36,6 +36,12 @@ spec:
 {{ toYaml $.Values.extraAnnotations.helmops | indent 8 }}
 {{- end }}
     spec:
+      {{- with $.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- range . }}
+        - name: {{ . | quote }}
+        {{- end }}
+      {{- end }}
       serviceAccountName: helmops
       containers:
         - image: "{{ template "system_default_registry" $ }}{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"

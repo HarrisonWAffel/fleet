@@ -32,19 +32,20 @@ const (
 )
 
 type ManifestOptions struct {
-	AgentEnvVars            []corev1.EnvVar
-	AgentImage              string // DefaultAgentImage = "rancher/fleet-agent" + ":" + version.Version
-	AgentImagePullPolicy    string
-	AgentTolerations        []corev1.Toleration
-	AgentReplicas           int32
-	CheckinInterval         string
-	PrivateRepoURL          string // PrivateRepoURL = registry.yourdomain.com:5000
-	SystemDefaultRegistry   string
-	AgentAffinity           *corev1.Affinity
-	AgentResources          *corev1.ResourceRequirements
-	HostNetwork             bool
-	BundleDeploymentWorkers string
-	DriftWorkers            string
+	AgentEnvVars                          []corev1.EnvVar
+	AgentImage                            string // DefaultAgentImage = "rancher/fleet-agent" + ":" + version.Version
+	AgentImagePullPolicy                  string
+	AgentTolerations                      []corev1.Toleration
+	AgentReplicas                         int32
+	CheckinInterval                       string
+	PrivateRepoURL                        string // PrivateRepoURL = registry.yourdomain.com:5000
+	SystemDefaultRegistry                 string
+	SystemDefaultRegistryImagePullSecrets []string
+	AgentAffinity                         *corev1.Affinity
+	AgentResources                        *corev1.ResourceRequirements
+	HostNetwork                           bool
+	BundleDeploymentWorkers               string
+	DriftWorkers                          string
 	cmd.LeaderElectionOptions
 	PriorityClassName string
 }
@@ -264,6 +265,12 @@ func agentApp(namespace string, agentScope string, opts ManifestOptions) *appsv1
 				},
 			},
 		},
+	}
+
+	if len(opts.SystemDefaultRegistryImagePullSecrets) > 0 {
+		for _, sec := range opts.SystemDefaultRegistryImagePullSecrets {
+			app.Spec.Template.Spec.ImagePullSecrets = append(app.Spec.Template.Spec.ImagePullSecrets, corev1.LocalObjectReference{Name: sec})
+		}
 	}
 
 	if !DisableSecurityContext {

@@ -439,14 +439,15 @@ func (i *importHandler) importCluster(cluster *fleet.Cluster, status fleet.Clust
 			},
 			// keep in sync with manageagent.go
 			ManifestOptions: agent.ManifestOptions{
-				AgentEnvVars:      cluster.Spec.AgentEnvVars,
-				AgentTolerations:  cluster.Spec.AgentTolerations,
-				PrivateRepoURL:    cluster.Spec.PrivateRepoURL,
-				AgentAffinity:     cluster.Spec.AgentAffinity,
-				AgentResources:    cluster.Spec.AgentResources,
-				HostNetwork:       *cmp.Or(cluster.Spec.HostNetwork, ptr.To(false)),
-				AgentReplicas:     agentReplicas,
-				PriorityClassName: priorityClassName,
+				AgentEnvVars:                          cluster.Spec.AgentEnvVars,
+				AgentTolerations:                      cluster.Spec.AgentTolerations,
+				PrivateRepoURL:                        cluster.Spec.PrivateRepoURL,
+				AgentAffinity:                         cluster.Spec.AgentAffinity,
+				AgentResources:                        cluster.Spec.AgentResources,
+				SystemDefaultRegistryImagePullSecrets: cluster.Spec.PrivateRepoPullSecrets,
+				HostNetwork:                           *cmp.Or(cluster.Spec.HostNetwork, ptr.To(false)),
+				AgentReplicas:                         agentReplicas,
+				PriorityClassName:                     priorityClassName,
 			},
 		})
 	objs = append(objs, agentObjs...)
