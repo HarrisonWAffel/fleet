@@ -457,6 +457,14 @@ func (r *GitJobReconciler) newJobSpec(ctx context.Context, gitrepo *v1alpha1.Git
 
 	zero := int32(0)
 
+	// Build imagePullSecrets from the fleet-controller config.
+	// This ensures git job pods can pull images from authenticated registries.
+	cfg := config.Get()
+	var imagePullSecrets []corev1.LocalObjectReference
+	for _, s := range cfg.SystemDefaultRegistryPullSecrets {
+		imagePullSecrets = append(imagePullSecrets, corev1.LocalObjectReference{Name: s})
+	}
+
 	return &batchv1.JobSpec{
 		BackoffLimit: &zero,
 		Template: corev1.PodTemplateSpec{
@@ -469,6 +477,7 @@ func (r *GitJobReconciler) newJobSpec(ctx context.Context, gitrepo *v1alpha1.Git
 					RunAsUser: &[]int64{1000}[0],
 				},
 				ServiceAccountName: saName,
+				ImagePullSecrets:   imagePullSecrets,
 				RestartPolicy:      corev1.RestartPolicyNever,
 				Containers: []corev1.Container{
 					{

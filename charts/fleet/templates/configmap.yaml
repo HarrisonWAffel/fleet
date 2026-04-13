@@ -29,6 +29,9 @@ data:
         "namespace": "{{.Values.bootstrap.namespace}}",
         "agentNamespace": "{{.Values.bootstrap.agentNamespace}}"
       },
+      {{- if .Values.imagePullSecrets }}
+      "systemDefaultRegistryPullSecret": [{{- range $i, $e := .Values.imagePullSecrets }}{{if $i}},{{end}}"{{ $e }}"{{- end }}],
+      {{- end }}
       "webhookReceiverURL": "{{.Values.webhookReceiverURL}}",
       "githubURLPrefix": "{{.Values.githubURLPrefix}}",
       "gitClientTimeout": "{{.Values.gitClientTimeout}}"

@@ -342,6 +342,7 @@ func TestReconcile_Error_WhenSecretDoesNotExist(t *testing.T) {
 }
 
 func TestNewJob(t *testing.T) {
+	config.Set(config.DefaultConfig())
 	securityContext := &corev1.SecurityContext{
 		AllowPrivilegeEscalation: &[]bool{false}[0],
 		ReadOnlyRootFilesystem:   &[]bool{true}[0],
@@ -1656,6 +1657,7 @@ func TestNewJob(t *testing.T) {
 }
 
 func TestGenerateJob_EnvVars(t *testing.T) {
+	config.Set(config.DefaultConfig())
 	ctx := context.TODO()
 
 	tests := map[string]struct {
