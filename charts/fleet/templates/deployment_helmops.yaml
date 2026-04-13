@@ -36,7 +36,7 @@ spec:
 {{ toYaml $.Values.extraAnnotations.helmops | indent 8 }}
 {{- end }}
     spec:
-      {{- with $.Values.imagePullSecrets }}
+      {{- with $.Values.global.cattle.imagePullSecrets }}
       imagePullSecrets:
         {{- range . }}
         - name: {{ . | quote }}

@@ -12,7 +12,7 @@ spec:
       labels:
         app: fleet-agent
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with .Values.global.cattle.imagePullSecrets }}
       imagePullSecrets:
         {{- range . }}
         - name: {{ . | quote }}

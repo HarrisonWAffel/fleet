@@ -3,7 +3,6 @@ image:
   repository: rancher/fleet-agent
   tag: dev
 
-imagePullSecrets: []
 
 # The public URL of the Kubernetes API server running the Fleet Controller must be set here
 # Example: https://example.com:6443
@@ -74,6 +73,7 @@ kubectl:
 global:
   cattle:
     systemDefaultRegistry: ""
+    imagePullSecrets: []
 
 debug: false
 debugLevel: 0
