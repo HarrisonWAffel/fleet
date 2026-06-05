@@ -158,6 +158,10 @@ type ClusterSpec struct {
 	// +nullable
 	// +optional
 	AgentSchedulingCustomization *AgentSchedulingCustomization `json:"agentSchedulingCustomization,omitempty"`
+
+	// +nullable
+	// +optional
+	AgentPullSecrets *[]corev1.LocalObjectReference `json:"agentPullSecrets,omitempty"`
 }
 
 type ClusterStatus struct {

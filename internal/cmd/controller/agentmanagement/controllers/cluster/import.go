@@ -433,6 +433,16 @@ func (i *importHandler) importCluster(cluster *fleet.Cluster, status fleet.Clust
 		}
 	}
 
+	var pullSecrets []corev1.LocalObjectReference
+	// A nil AgentPullSecrets field indicates that hte
+	// global fleet config should be used. An empty AgentPullSecrets
+	// field indicates that no pull secrets should be used.
+	if cluster.Spec.AgentPullSecrets != nil {
+		pullSecrets = *cluster.Spec.AgentPullSecrets
+	} else {
+		pullSecrets = cfg.ImagePullSecrets
+	}
+
 	// Notice we only set the agentScope when it's a non-default agentNamespace. This is for backwards compatibility
 	// for when we didn't have agent scope before
 	agentObjs, err := agent.AgentWithConfig(
@@ -459,7 +469,7 @@ func (i *importHandler) importCluster(cluster *fleet.Cluster, status fleet.Clust
 				HostNetwork:       *cmp.Or(cluster.Spec.HostNetwork, new(false)),
 				AgentReplicas:     agentReplicas,
 				PriorityClassName: priorityClassName,
-				ImagePullSecrets:  cfg.ImagePullSecrets,
+				ImagePullSecrets:  pullSecrets,
 			},
 		})
 	objs = append(objs, agentObjs...)

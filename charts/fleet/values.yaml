@@ -1,10 +1,10 @@
 image:
-  repository: rancher/fleet
+  repository: harrisonwaffel/fleet
   tag: dev
   imagePullPolicy: IfNotPresent
 
 agentImage:
-  repository: rancher/fleet-agent
+  repository: harrisonwaffel/fleet-agent
   tag: dev
   imagePullPolicy: IfNotPresent
 
